@@ -2,11 +2,15 @@
 
 ---
 
-#### 環境
+#### 開発環境
 
 > macOS<br>
 > Ubuntu 20.04 LTS<br>
-> Ruby(Sinatra)<br>
 > Nginx<br>
 > Docker<br>
 > Google Compute Engine<br>
+
+#### 使用言語
+
+> Ruby(Sinatra)<br>
+> HTML, CSS, JavaScript<br>
