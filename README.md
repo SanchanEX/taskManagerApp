@@ -14,3 +14,4 @@
 
 > Ruby(Sinatra)<br>
 > HTML, CSS, JavaScript<br>
+> MySQL
