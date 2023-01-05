@@ -1,15 +1,5 @@
 require 'sinatra'
-
-tasks = [
-  {
-    title: 'フロントエンドの実装',
-    createdAt: Time.now
-  },
-  {
-    title: 'バックエンドの実装',
-    createdAt: Time.now
-  }
-]
+require 'mysql2'
 
 get '/' do
   'Hello world!'
@@ -22,6 +12,19 @@ get '/api/hello' do
 end
 
 get '/api/tasks' do
+  client = connect
+
+  result_set = client.query('select id, title, created_at from tasks')
+  tasks = result_set.map do |row|
+    {
+      id: row['id'],
+      title: row['title'],
+      createdAt: row['created_at']
+    }
+  end
+
+  client.close
+
   {
     tasks: tasks
   }.to_json
@@ -30,12 +33,22 @@ end
 post '/api/tasks' do
   request_body = JSON.parse request.body.read
 
-  task = {
-    title: request_body['title'],
-    createdAt: Time.now
-  }
+  title = request_body['title']
 
-  tasks.push task
-  
-  task.to_json
+  client = connect
+
+  statement = client.prepare('INSERT INTO tasks (title) values (?)')
+  statement.execute(title)
+
+  client.close
+end
+
+def connect
+  Mysql2::Client.new(
+    :host => "localhost",
+    :database => "mydb",
+    :username => "myuser",
+    :password => "password",
+    :connect_timeout => 5
+  )
 end
