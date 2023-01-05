@@ -1,10 +1,16 @@
 const tasksTableBodyElement = document.getElementById('tasks-table-body')
+const taskTitleInputElement = document.getElementById('task-title-input')
+const taskAddButtonElment = document.getElementById('task-add-button')
 
 async function loadTasks() {
   const response = await fetch('/api/tasks')
   const responseBody = await response.json()
 
   const tasks = responseBody.tasks
+
+  while (tasksTableBodyElement.firstChild) {
+    tasksTableBodyElement.removeChild(tasksTableBodyElement.firstChild)
+  }
 
   tasks.forEach((task) => {
     const titleTdElement = document.createElement('td')
@@ -21,7 +27,23 @@ async function loadTasks() {
   })
 }
 
+async function registerTask() {
+  const title = taskTitleInputElement.value
+
+  const requestBody = {
+    title: title
+  }
+
+  await fetch('/api/tasks', {
+    method: 'POST',
+    body: JSON.stringify(requestBody)
+  })
+
+  await loadTasks()
+}
+
 async function main() {
+  taskAddButtonElment.addEventListener('click', registerTask)
   await loadTasks()
 }
 
