@@ -4,9 +4,9 @@
 
 #### 環境
 
-> macOS
-> Ubuntu 20.04 LTS
-> Ruby(Sinatra)
-> Nginx
-> Docker
-> Google Compute Engine
+> macOS<br>
+> Ubuntu 20.04 LTS<br>
+> Ruby(Sinatra)<br>
+> Nginx<br>
+> Docker<br>
+> Google Compute Engine<br>
